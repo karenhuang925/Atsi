@@ -18,7 +18,7 @@ class Product(db.Model):
     sold_num = db.Column(db.Integer)
     desc = db.Column(db.String(4000), nullable=False, unique=True)
     shipping_fee = db.Column(db.Float)
-    delivery_days = db.Column(db.Datetime)
+    delivery_days = db.Column(db.Integer)
     preview_image = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
