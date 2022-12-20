@@ -16,7 +16,7 @@ class Product(db.Model):
     original_price = db.Column(db.Float)
     inventory = db.Column(db.Integer)
     sold_num = db.Column(db.Integer)
-    desc = db.Column(db.String(4000), nullable=False, unique=True)
+    desc = db.Column(db.String(4000), nullable=False)
     shipping_fee = db.Column(db.Float)
     delivery_days = db.Column(db.Integer)
     preview_image = db.Column(db.String(255), nullable=False)
@@ -103,6 +103,7 @@ class Product(db.Model):
             'title': self.title,
             'price': self.price,
             'original_price': self.original_price,
+            'inventory': self.inventory,
             'sold_num': self.sold_num,
             'shipping_fee': self.shipping_fee,
             'delivery_days': self.delivery_days,
