@@ -44,7 +44,7 @@ class Product(db.Model):
             'shipping_fee': self.shipping_fee,
             'delivery_days': self.delivery_days,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
         }
 
 
@@ -59,5 +59,62 @@ class Product(db.Model):
             'Vendor': {
                 'id': self.user.id,
                 'shop_name': self.user.shop_name,
+            }
+        }
+
+    def to_dict_category(self):
+        return {
+            'id': self.id,
+            'preview_image': self.preview_image,
+            'title': self.title,
+            'price': self.price,
+            'original_price': self.original_price,
+            'sold_num': self.sold_num,
+            'shipping_fee': self.shipping_fee,
+            'delivery_days': self.delivery_days,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'Vendor': {
+                'id': self.user.id,
+                'shop_name': self.user.shop_name,
+            }
+        }
+
+    def to_dict_vendor(self):
+        return {
+            'id': self.id,
+            'category_id': self.category_id,
+            'preview_image': self.preview_image,
+            'title': self.title,
+            'price': self.price,
+            'original_price': self.original_price,
+            'inventory': self.inventory,
+            'sold_num': self.sold_num,
+            'shipping_fee': self.shipping_fee,
+            'delivery_days': self.delivery_days,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+        }
+
+    def to_dict_detail(self):
+        return {
+            'id': self.id,
+            'preview_image': self.preview_image,
+            'title': self.title,
+            'price': self.price,
+            'original_price': self.original_price,
+            'sold_num': self.sold_num,
+            'shipping_fee': self.shipping_fee,
+            'delivery_days': self.delivery_days,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'Vendor': {
+                'id': self.user.id,
+                'shop_name': self.user.shop_name,
+            },
+            'Category': {
+                'id': self.category.id,
+                'name': self.category.name,
+                'preview_image': self.category.preview_image,
             }
         }
