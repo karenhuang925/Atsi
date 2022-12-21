@@ -22,8 +22,21 @@ class CartItem(db.Model):
         return {
             'id': self.id,
             'session_id': self.session_id,
-            'product_id': self.product_id,
             'quantity': self.quantity,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'product': {
+                "id": self.product.id,
+                "preview_image": self.product.preview_image,
+                "title": self.product.title,
+                "price": self.product.price,
+                "original_price": self.product.original_price,
+                "sold_num": self.product.sold_num,
+                "delivery_days": self.product.delivery_days,
+                "Vendor": {
+                        "id": self.product.user.id,
+                        "shop_name": self.product.user.id,
+                        "preview_image": self.product.user.preview_image,
+                }
+            }
         }

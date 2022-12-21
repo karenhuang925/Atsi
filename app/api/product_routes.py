@@ -109,14 +109,13 @@ def edit_product(id):
 @product_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_product(id):
-
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
     product = Product.query.filter(id == Product.id).one_or_none()
     if not product:
         return {
-            "message": "Reply couldn't be found",
+            "message": "product couldn't be found",
             "statusCode": 404
             }, 404
 

@@ -13,5 +13,4 @@ def products(name):
     Query for a user by id and returns that user in a dictionary
     """
     products = Product.query.join(Category).filter(Category.name.ilike(f'%{name}%')).all()
-    print(products)
     return {'Products': [product.to_dict_category() for product in products]}
