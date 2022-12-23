@@ -1,14 +1,15 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import LogoutButton from './auth/LogoutButton';
 import './NavBar.css'
 
 const NavBar = () => {
   return (
     <nav>
       <div className='header'>
-        <img className='logo' src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Etsy_logo.svg/2560px-Etsy_logo.svg.png'/>
+        <NavLink to='/' exact={true} activeClassName='active'>
+          <img className='logo' src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Etsy_logo.svg/2560px-Etsy_logo.svg.png' alt="logo"/>
+        </NavLink>
         <input className='searchBar' placeholder='Search for anything'></input>
         <button className='searchButton'>
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -66,14 +67,7 @@ const NavBar = () => {
           </NavLink>
         </li>
       </ul>
-
-
-      <ul>
-        <li>
-          <NavLink to='/' exact={true} activeClassName='active'>
-            Home
-          </NavLink>
-        </li>
+      {/* <ul>
         <li>
           <NavLink to='/sign-up' exact={true} activeClassName='active'>
             Sign Up
@@ -87,7 +81,7 @@ const NavBar = () => {
         <li>
           <LogoutButton />
         </li>
-      </ul>
+      </ul> */}
     </nav>
   );
 }
