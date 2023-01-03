@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {get_categories } from '../store/category'
+import { get_homepage_products, get_category_products, get_user_products, get_product_detail } from '../store/product';
 import './Homepage.css'
 
 const HomePage = () => {
@@ -9,7 +10,8 @@ const HomePage = () => {
 
     useEffect(()=> {
         dispatch(get_categories())
-    },[])
+        dispatch(get_product_detail(1))
+    },[dispatch])
     const categories = useSelector((state=>state.category))
 
 
