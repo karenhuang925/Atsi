@@ -31,14 +31,14 @@ const editProduct = (product) => ({
   type: EDIT_PRODUCT,
   payload: product
 });
-const deleteProduct = (product) => ({
+const deleteProduct = (id) => ({
   type: DELETE_PRODUCT,
-  payload: product
+  payload: id
 });
 
 const initialState =  [] ;
 
-export const get_homepage_products = () => async (dispatch) => {
+export const get_homepage_products_fetch = () => async (dispatch) => {
   const response = await fetch('/api/products/', {
     headers: {
       'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ export const get_homepage_products = () => async (dispatch) => {
   }
 }
 
-export const get_category_products = (name) => async (dispatch) => {
+export const get_category_products_fetch = (name) => async (dispatch) => {
   const response = await fetch(`/api/categories/${name}/products`, {
     headers: {
       'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ export const get_category_products = (name) => async (dispatch) => {
     dispatch(setCategoryProduct(data));
   }
 }
-export const get_user_products = (userId) => async (dispatch) => {
+export const get_user_products_fetch = (userId) => async (dispatch) => {
   const response = await fetch(`/api/users/${userId}/products`, {
     headers: {
       'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ export const get_user_products = (userId) => async (dispatch) => {
     dispatch(setUserProduct(data));
   }
 }
-export const get_product_detail = (productId) => async (dispatch) => {
+export const get_product_detail_fetch = (productId) => async (dispatch) => {
   const response = await fetch(`/api/products/${productId}`, {
     headers: {
       'Content-Type': 'application/json'
@@ -85,6 +85,45 @@ export const get_product_detail = (productId) => async (dispatch) => {
     const data = await response.json();
     if (data.errors) return
     dispatch(setProductDetail(data));
+  }
+}
+
+export const add_product_fetch = (product) => async (dispatch) => {
+  const response = await fetch(`/api/products`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(product)
+  });
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) return
+    dispatch(addProduct(data));
+  }
+}
+export const edit_product_fetch = (product, id) => async (dispatch) => {
+  const response = await fetch(`/api/products/${id}`, {
+    method: "PUT",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(product)
+  });
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) return
+    dispatch(editProduct(data));
+  }
+}
+export const delete_product_fetch = (id) => async (dispatch) => {
+  const response = await fetch(`/api/products/${id}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) return
+    dispatch(deleteProduct(id));
   }
 }
 

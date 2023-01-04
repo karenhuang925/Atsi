@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {get_categories } from '../store/category'
-import { get_homepage_products, get_category_products, get_user_products, get_product_detail } from '../store/product';
+import {get_categories_fetch } from '../store/category'
+import { get_homepage_products_fetch, get_category_products_fetch, get_user_products_fetch, get_product_detail_fetch } from '../store/product';
 import './Homepage.css'
 
 const HomePage = () => {
     const dispatch = useDispatch()
 
     useEffect(()=> {
-        dispatch(get_categories())
-        dispatch(get_product_detail(1))
+        dispatch(get_categories_fetch())
+        dispatch(get_product_detail_fetch(1))
     },[dispatch])
     const categories = useSelector((state=>state.category))
 

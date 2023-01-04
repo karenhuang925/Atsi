@@ -8,7 +8,7 @@ const setCategory = (category) => ({
 
 const initialState =  null ;
 
-export const get_categories = () => async (dispatch) => {
+export const get_categories_fetch = () => async (dispatch) => {
   const response = await fetch('/api/categories/', {
     headers: {
       'Content-Type': 'application/json'
