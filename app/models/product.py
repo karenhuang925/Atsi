@@ -101,6 +101,7 @@ class Product(db.Model):
             'id': self.id,
             'preview_image': self.preview_image,
             'title': self.title,
+            'desc':self.desc,
             'price': self.price,
             'original_price': self.original_price,
             'inventory': self.inventory,

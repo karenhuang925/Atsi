@@ -2,3 +2,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.text-discount-green{
+    --tw-text-opacity: 1;
+    color: rgb(37 134 53 / var(--tw-text-opacity));
+}
+
+.text-low-red{
+    --tw-text-opacity: 1;
+    color: rgb(253, 102, 102)
+}
+
+.bg-low-red{
+    --tw-text-opacity: 1;
+    background-color: rgb(251, 190, 190)
+}
+
+.align-center {
+    align-items: center;
+}
+
+
+.wt-text-truncate {
+    overflow: scroll;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  /* truncate to 4 lines */
+    -webkit-line-clamp: 2;
+}
+
+@media (min-width: 1024px) {
+    .lg\:h-60 {
+      height: 15rem;
+    }
+}
+
+.underline-dotted{
+    text-decoration: underline dotted;
+}
+
+.transition-height{
+    transition: height 0.5 ease-in-out;
+}

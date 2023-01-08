@@ -1,0 +1,92 @@
+.image-swiper {
+    position: relative;
+    background-color: rgb(255, 255, 255);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    object-fit: contain;
+}
+
+.image-container {
+    display: flex;
+    max-width: 100%;
+}
+
+.post-media {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: lightgray;
+
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: lightgray;
+
+
+    max-width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.right-arrow {
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    /* z-index: 10; */
+    cursor: pointer;
+    user-select: none;
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.left-arrow {
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    /* z-index: 10; */
+    cursor: pointer;
+    user-select: none;
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallary{
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    height: 100px;
+}
+
+.gallary:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Six columns side by side */
+.row {
+    opacity: 0.6;
+}
+
+.active{
+    border: 2px solid black;
+}
+
+.row:hover {
+    opacity: 1;
+}
