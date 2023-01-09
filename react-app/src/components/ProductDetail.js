@@ -1,10 +1,10 @@
 
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams} from 'react-router-dom';
+import { useParams, Link} from 'react-router-dom';
 import './ProductDetail.css'
 import { get_product_detail_fetch } from '../store/product';
-
+import RecommendProduct from './RecommendProduct';
 
 const ProductDetail = () => {
     const dispatch = useDispatch()
@@ -12,15 +12,14 @@ const ProductDetail = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isExpanded, setIsExpanded] = useState(true);
     const [isShippingExpanded, setIsShippingExpanded] = useState(true);
-    const [isOverflow, setIsOverflow] = useState(false);
     const [descHeight, setDescHeight] = useState(60);
 
     useEffect(()=> {
         dispatch(get_product_detail_fetch(productId))
     },[dispatch])
     const product = useSelector((state=>state.product.currentProduct))
-    if (!product) return null
 
+    if (!product) return null
     const images = product.Images
     const length = images?.length ? images.length : null
 
@@ -82,7 +81,7 @@ const ProductDetail = () => {
                 <h1 className="text-2xl tracking-tight text-gray-900 sm:text-3xl mb-8">{product.title}</h1>
                 <div className='flex justify-between'>
                     <div className='flex'>
-                        <p className="text-3xl tracking-tight text-gray-900 ">${product.price}</p>
+                        <p className="text-3xl font-bold tracking-tight text-gray-900 ">${product.price}</p>
                         {product.original_price && (
                                 <div className='flex align-center '>
                                     <strike className="text-base text-discount-green px-3">${product.original_price}</strike>
@@ -100,7 +99,7 @@ const ProductDetail = () => {
                         }} className="text-xl bg-white hover:bg-slate-300 rounded-3xl p-3 flex justify-between align-center"><p>Description</p>
                     {isExpanded ? <i className='fa fa-chevron-up'></i> : <i className='fa fa-chevron-down'></i>}
                     </h3>
-                    <div className="">
+                    <div >
                         <p className="text-base text-gray-900 px-3 overflow-scroll text-ellipsis transition-height" style={{ height: `${descHeight}px` }}>{product.desc}</p>
                     </div>
                     <div div className="py-10 w-full">
@@ -120,8 +119,26 @@ const ProductDetail = () => {
                     </div>
                 </div>
             </div>
+            </div>
+            <div>
+                <div className='more-from-this-shop ml-5 flex justify-between'>
+                    <p className='text-3xl'>More from this shop</p>
+                    <Link to={`/users/${product.Vendor.id}`}>
+                        <button className="flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2">See more</button>
+                    </Link>
+                </div>
+                    <RecommendProduct type='shop' value={product.Vendor.id} ></RecommendProduct>
+            </div>
+            <div>
+                <div className='more-from-this-shop ml-5 flex justify-between'>
+                    <p className='text-3xl'>More from this category</p>
+                    <Link to={`/category/${product.Category.name.split(" ")[0]}`}>
+                    <button className="flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2">See more</button>
+                    </Link>
+                </div>
+                    <RecommendProduct type='category' value={product.Category.name} ></RecommendProduct>
+            </div>
         </div>
-    </div>
 
     )
 }

@@ -7,16 +7,16 @@ const NavBar = () => {
   return (
     <nav>
       <div className='header'>
-        <NavLink to='/' exact={true} activeClassName='active'>
+        <NavLink to='/' exact={true} >
           <img className='logo' src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Etsy_logo.svg/2560px-Etsy_logo.svg.png' alt="logo"/>
         </NavLink>
         <input className='searchBar' placeholder='Search for anything'></input>
         <button className='searchButton'>
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <i className="fa-solid fa-magnifying-glass"></i>
         </button>
-        <NavLink to='/login' exact={true} className='signIn' activeClassName='active'>Sign in</NavLink>
-        <NavLink to='/carts' exact={true} className='shoppingCart' activeClassName='active'>
-          <i class="fa-solid fa-cart-shopping"></i>
+        <NavLink to='/login' exact={true} className='signIn' >Sign in</NavLink>
+        <NavLink to='/carts' exact={true} className='shoppingCart' >
+          <i className="fa-solid fa-cart-shopping"></i>
         </NavLink>
       </div>
 

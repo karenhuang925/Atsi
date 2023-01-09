@@ -83,7 +83,7 @@
     opacity: 0.6;
 }
 
-.active{
+.active div{
     border: 2px solid black;
 }
 

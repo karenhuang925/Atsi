@@ -8,7 +8,6 @@
 
 .logo{
     width: 77px;
-
 }
 
 .searchBar{
@@ -16,7 +15,7 @@
     border-bottom-left-radius: 20px;
     border-right: 0px;
     flex-grow: 1;
-    margin-right: -15px;
+    margin-right: -30px;
     height: 35px;
     padding-left: 20px;
     border-width: 2px;

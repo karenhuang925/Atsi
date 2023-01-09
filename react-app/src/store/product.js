@@ -136,11 +136,11 @@ export default function reducer(state = initialState, action) {
       return newState
     case SET_CATEGORY_PRODUCT:
       newState = {...state,
-        ...action.payload.Products}
+        categoryProduct:action.payload}
       return newState
     case SET_USER_PRODUCT:
       newState = {...state,
-        ...action.payload.Products}
+        shopProduct:action.payload}
       return newState
     case SET_PRODUCT_DETAIL:
       newState = {...state,

@@ -645,6 +645,22 @@ video {
   width: fit-content;
 }
 
+.w-10 {
+  width: 2.5rem;
+}
+
+.w-8 {
+  width: 2rem;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.w-14 {
+  width: 3.5rem;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -705,12 +721,21 @@ video {
   border-radius: 1rem;
 }
 
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
 .border {
   border-width: 1px;
 }
 
 .border-transparent {
   border-color: transparent;
+}
+
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
 .bg-white {
@@ -785,6 +810,11 @@ video {
   padding-right: 0.5rem;
 }
 
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -856,6 +886,11 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
 .text-discount-green{
   --tw-text-opacity: 1;
   color: rgb(37 134 53 / var(--tw-text-opacity));
@@ -913,6 +948,32 @@ video {
   color: rgb(99 102 241 / var(--tw-text-opacity));
 }
 
+.hover\:shadow:hover {
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.hover\:outline-none:hover {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.hover\:ring-2:hover {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.hover\:ring-black:hover {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(0 0 0 / var(--tw-ring-opacity));
+}
+
+.hover\:ring-offset-2:hover {
+  --tw-ring-offset-width: 2px;
+}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -967,6 +1028,10 @@ video {
     height: 100%;
   }
 
+  .lg\:h-40 {
+    height: 10rem;
+  }
+
   .lg\:w-full {
     width: 100%;
   }
@@ -983,6 +1048,10 @@ video {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  .lg\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -992,5 +1061,9 @@ video {
 @media (min-width: 1280px) {
   .xl\:gap-x-8 {
     column-gap: 2rem;
+  }
+
+  .xl\:gap-x-10 {
+    column-gap: 2.5rem;
   }
 }
