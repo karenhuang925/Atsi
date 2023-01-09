@@ -26,7 +26,7 @@ const RecommendProduct = ({type, value}) => {
         if (!products) return null
 
     return(
-    <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10">
+    <div className="mt-6 px-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10">
     {products.map((product) => (
         <div key={product.id} className="group relative">
             <div className="min-h-60 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-40">

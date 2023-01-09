@@ -121,7 +121,7 @@ const ProductDetail = () => {
             </div>
             </div>
             <div>
-                <div className='more-from-this-shop ml-5 flex justify-between'>
+                <div className='more-from-this-shop px-6 flex justify-between'>
                     <p className='text-3xl'>More from this shop</p>
                     <Link to={`/users/${product.Vendor.id}`}>
                         <button className="flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2">See more</button>
@@ -130,7 +130,7 @@ const ProductDetail = () => {
                     <RecommendProduct type='shop' value={product.Vendor.id} ></RecommendProduct>
             </div>
             <div>
-                <div className='more-from-this-shop ml-5 flex justify-between'>
+                <div className='more-from-this-shop px-6 flex justify-between'>
                     <p className='text-3xl'>More from this category</p>
                     <Link to={`/category/${product.Category.name.split(" ")[0]}`}>
                     <button className="flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2">See more</button>

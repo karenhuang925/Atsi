@@ -1,23 +1,29 @@
 
-import React from 'react';
+import React,  { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './NavBar.css'
+import logo from "../logo.png";
+import LoginFormModal from "./auth/LoginModal"
+import Cart from './Cart';
 
 const NavBar = () => {
+  const [cartOpen, setCartOpen] = useState(false)
+
   return (
     <nav>
       <div className='header'>
         <NavLink to='/' exact={true} >
-          <img className='logo' src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Etsy_logo.svg/2560px-Etsy_logo.svg.png' alt="logo"/>
+          <img className='logo' src={logo} alt="logo"/>
         </NavLink>
         <input className='searchBar' placeholder='Search for anything'></input>
         <button className='searchButton'>
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
-        <NavLink to='/login' exact={true} className='signIn' >Sign in</NavLink>
-        <NavLink to='/carts' exact={true} className='shoppingCart' >
+        <LoginFormModal />
+        <div className='shoppingCart' onClick={()=>setCartOpen(true)}>
           <i className="fa-solid fa-cart-shopping"></i>
-        </NavLink>
+          <Cart setCartOpen={setCartOpen} cartOpen={cartOpen}/>
+        </div>
       </div>
 
       <ul className='headerCategory'>

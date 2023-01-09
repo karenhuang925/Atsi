@@ -1,8 +1,8 @@
-"""updated tables
+"""empty message
 
-Revision ID: 6f52f0ff5a3e
+Revision ID: fb8f52ae6254
 Revises: 
-Create Date: 2022-12-18 13:57:12.703339
+Create Date: 2023-01-08 22:30:25.181915
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6f52f0ff5a3e'
+revision = 'fb8f52ae6254'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,10 +29,10 @@ def upgrade():
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('first_name', sa.String(length=20), nullable=False),
-    sa.Column('last_name', sa.String(length=20), nullable=False),
+    sa.Column('last_name', sa.String(length=20), nullable=True),
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('hashed_password', sa.String(length=265), nullable=False),
-    sa.Column('preview_image', sa.String(length=2550), nullable=False),
+    sa.Column('preview_image', sa.String(length=2550), nullable=True),
     sa.Column('shop_name', sa.String(length=40), nullable=True),
     sa.Column('location', sa.String(length=40), nullable=True),
     sa.PrimaryKeyConstraint('id'),
@@ -58,14 +58,13 @@ def upgrade():
     sa.Column('sold_num', sa.Integer(), nullable=True),
     sa.Column('desc', sa.String(length=4000), nullable=False),
     sa.Column('shipping_fee', sa.Float(), nullable=True),
-    sa.Column('delivery_days', sa.DateTime(), nullable=True),
+    sa.Column('delivery_days', sa.Integer(), nullable=True),
     sa.Column('preview_image', sa.String(length=255), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
     sa.ForeignKeyConstraint(['category_id'], ['categories.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('desc')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('cartItems',
     sa.Column('id', sa.Integer(), nullable=False),
