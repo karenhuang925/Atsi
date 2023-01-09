@@ -13,6 +13,7 @@ export default function Cart({cartOpen, setCartOpen}) {
     },[dispatch])
 
     const products = useSelector((state => state.cart?.Items))
+    const cart = useSelector((state => state.cart))
     if (!products) return null
     return (
         <Transition.Root show={cartOpen} as={Fragment}>
@@ -65,8 +66,8 @@ export default function Cart({cartOpen, setCartOpen}) {
                                 <li key={product.id} className="flex py-6">
                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     <img
-                                        src={product.imageSrc}
-                                        alt={product.imageAlt}
+                                        src={product.product.preview_image}
+                                        alt={product.product.title}
                                         className="h-full w-full object-cover object-center"
                                     />
                                     </div>
@@ -74,12 +75,11 @@ export default function Cart({cartOpen, setCartOpen}) {
                                     <div className="ml-4 flex flex-1 flex-col">
                                     <div>
                                         <div className="flex justify-between text-base font-medium text-gray-900">
-                                        <h3>
-                                            <a href={product.href}>{product.name}</a>
+                                        <h3 className='wt-text-truncate'>
+                                            <a href={`/products/${product.product.id}`}>{product.product.title}</a>
                                         </h3>
-                                        <p className="ml-4">{product.price}</p>
+                                        <p className="ml-4">{product.product.price}</p>
                                         </div>
-                                        <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                                     </div>
                                     <div className="flex flex-1 items-end justify-between text-sm">
                                         <p className="text-gray-500">Qty {product.quantity}</p>
@@ -104,7 +104,7 @@ export default function Cart({cartOpen, setCartOpen}) {
                         <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                         <div className="flex justify-between text-base font-medium text-gray-900">
                             <p>Subtotal</p>
-                            <p>$262.00</p>
+                            <p>{cart.amount}</p>
                         </div>
                         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                         <div className="mt-6">
