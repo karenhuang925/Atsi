@@ -45,3 +45,12 @@
 .transition-height{
     transition: height 0.5 ease-in-out;
 }
+
+.auth_modal{
+    width:500px;
+    height:700px
+}
+.product_modal{
+    width:700px;
+    height:900px
+}

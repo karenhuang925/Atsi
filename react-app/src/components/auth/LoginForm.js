@@ -28,7 +28,7 @@ const LoginForm = ({setShowLoginModal}) => {
 
 
   return (
-    <div>
+    <div className='auth_modal'>
       <div className='flex justify-between mb-3'>
         <p className='text-2xl'>Sign in</p>
         <RegisterModal onClose={()=>setShowLoginModal(false)}/>

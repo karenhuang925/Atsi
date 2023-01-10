@@ -60,7 +60,7 @@ const SignUpForm = () => {
   }
 
   return (
-    <form onSubmit={onSignUp}>
+    <form onSubmit={onSignUp} className='auth_modal'>
       <p className='text-2xl font-medium mb-3'>Create your account</p>
       <p className='text-xl mb-5'>Registration is easy</p>
       <div>
