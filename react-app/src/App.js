@@ -9,6 +9,7 @@ import Profile from './components/Profile';
 import User from './components/User';
 import HomePage from './components/Homepage'
 import ProductDetail from './components/ProductDetail'
+import ProfileProduct from './components/ProfileProduct'
 import { authenticate } from './store/session';
 
 function App() {
@@ -30,14 +31,17 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Switch>
-        <ProtectedRoute path='/users' exact={true} >
+        <ProtectedRoute path='/users/my/' exact={true} >
           <Profile/>
         </ProtectedRoute>
+        <Route path='/users/:userId/products/' exact={true} >
+          <ProfileProduct />
+        </Route>
+        <Route path='/products/:productId/' exact={true} >
+          <ProductDetail />
+        </Route>
         <Route path='/' exact={true} >
           <HomePage />
-        </Route>
-        <Route path='/products/:productId' exact={true} >
-          <ProductDetail />
         </Route>
       </Switch>
     </BrowserRouter>

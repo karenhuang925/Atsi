@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link} from 'react-router-dom';
 import './ProductDetail.css'
-import { get_product_detail_fetch } from '../store/product';
+import { get_product_detail_fetch, delete_product_fetch } from '../store/product';
 import RecommendProduct from './RecommendProduct';
 
 const ProductDetail = () => {
@@ -14,13 +14,18 @@ const ProductDetail = () => {
     const [isShippingExpanded, setIsShippingExpanded] = useState(true);
     const [descHeight, setDescHeight] = useState(60);
 
+
     useEffect(()=> {
         dispatch(get_product_detail_fetch(productId))
     },[dispatch])
+    useEffect(()=> {
+        dispatch(get_product_detail_fetch(productId))
+    },[productId])
     const product = useSelector((state=>state.product.currentProduct))
+    const user = useSelector(state => state.session.user);
 
     if (!product) return null
-    const images = product.Images
+    let images = product.Images
     const length = images?.length ? images.length : null
 
     const nextImage = () => {
@@ -40,6 +45,26 @@ const ProductDetail = () => {
     var month = date.toLocaleString("default", { month: "short" });
     var day = date.toLocaleString("default", { day: "2-digit" });
     var formattedDate = [month, day].join(" ");
+
+    //edit and delete button
+    const deleteSpot = (e) => {
+        e.preventDefault();
+        dispatch(delete_product_fetch(product.id))
+    };
+    let editAndDelete;
+    if (user?.id === product?.Vendor?.id) {
+        editAndDelete = (
+            <div className='flex justify-evenly'>
+                <Link to={`/products/${product.id}/edit/`}>
+                    <button className='flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2 mr-3'>
+                    <i className='fa-solid fa-edit mr-2'></i> Edit this product</button>
+                </Link>
+                <button className='flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2' onClick={deleteSpot}>
+                    <i className='fa-solid fa-trash mr-2'></i> Delete this product
+                    </button>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-white">
@@ -72,9 +97,12 @@ const ProductDetail = () => {
                     )
                 })}
             </div>
-            <div className="py-10 w-full mr-4">
+            <div className="pb-10 w-full mr-4">
                 <div>
-                    <p className='text-base mb-3'>Shop: {product.Vendor.shop_name}</p>
+                    <div className='flex justify-between'>
+                        <p className='text-base mb-3'>Shop: {product.Vendor.shop_name}</p>
+                        {editAndDelete}
+                    </div>
                     <div className="text-sm font-medium text-indigo-600 hover:text-indigo-500 mb-3 flex "><i className="fa fa-certificate mr-1"></i><p className='underline-dotted'>Star Seller</p></div>
                     <p className='text-sm mb-3'>{product.sold_num} sales | {[...Array(5)].map((e, i) => <i className="fa fa-star checked text-xs "></i>)}</p>
                 </div>
@@ -132,7 +160,7 @@ const ProductDetail = () => {
             <div>
                 <div className='more-from-this-shop px-6 flex justify-between'>
                     <p className='text-3xl'>More from this category</p>
-                    <Link to={`/category/${product.Category.name.split(" ")[0]}`}>
+                    <Link to={`/category/${product.Category.name.split(" ")[0]}/`}>
                     <button className="flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2">See more</button>
                     </Link>
                 </div>

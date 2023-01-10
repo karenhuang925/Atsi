@@ -41,6 +41,17 @@ class User(db.Model, UserMixin):
             'email': self.email
         }
 
+    def to_profile_dict(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'preview_image': self.preview_image,
+            'email': self.email,
+            'shop_name': self.shop_name,
+            'location':self.location
+        }
+
 
     def to_dict_vendor_info(self):
         return {

@@ -28,47 +28,47 @@ const NavBar = () => {
 
       <ul className='headerCategory'>
         <li className='eachCategory'>
-          <NavLink to='/categories/holiday' exact={true}>
+          <NavLink to='/categories/holiday/' exact={true}>
             Holiday Shop
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/jewelry' exact={true}>
+          <NavLink to='/categories/jewelry/' exact={true}>
             Jewerlry & Accessories
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/clothing' exact={true}>
+          <NavLink to='/categories/clothing/' exact={true}>
             Clothing & Shoes
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/home' exact={true}>
+          <NavLink to='/categories/home/' exact={true}>
             Home & Living
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/wedding' exact={true}>
+          <NavLink to='/categories/wedding/' exact={true}>
             Wedding & Party
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/toy' exact={true}>
+          <NavLink to='/categories/toy/' exact={true}>
             Toy & Entertainment
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/Art' exact={true}>
+          <NavLink to='/categories/Art/' exact={true}>
             Art & Collectibles
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/craft' exact={true}>
+          <NavLink to='/categories/craft/' exact={true}>
             Craft Supplies
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/gift' exact={true}>
+          <NavLink to='/categories/gift/' exact={true}>
             Gift & Gift Cards
           </NavLink>
         </li>
