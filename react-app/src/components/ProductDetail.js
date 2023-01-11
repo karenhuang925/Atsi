@@ -3,7 +3,8 @@ import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link, Redirect} from 'react-router-dom';
 import './ProductDetail.css'
-import { get_product_detail_fetch, delete_product_fetch, get_category_products_fetch, get_user_products_fetch } from '../store/product';
+import { get_product_detail_fetch, delete_product_fetch } from '../store/product';
+import { edit_cart_fetch } from '../store/cart';
 import RecommendProduct from './RecommendProduct';
 import EditProductModal from './EditProductModal';
 
@@ -70,15 +71,12 @@ const ProductDetail = () => {
 
     const handleAddToCart = (e) =>{
         e.preventDefault();
-        let itemIndex = cartItems.findIndex(item => item.product.id == product.id)
-        console.log(itemIndex)
+        let updateItem
+        let itemIndex = cartItems.findIndex(item => item.product_id == product.id)
         if (itemIndex !== -1){
-            let theItem = cartItems[itemIndex]
-            let quantity = theItem.quantity
-            let updateItems = cartItems
-            updateItems[itemIndex] = {...updateItems[itemIndex], quantity: quantity}
-            console.log(updateItems)
+            updateItem = {product_id: cartItems[itemIndex].product_id, quantity: cartItems[itemIndex].quantity + 1}
         }
+        dispatch(edit_cart_fetch(updateItem))
     }
 
 
