@@ -5,8 +5,8 @@ import { PaperClipIcon } from '@heroicons/react/20/solid'
 
 const Profile = () => {
     const user = useSelector(state => state.session.user);
-
     if (!user) return null
+
     return (
     <div className="overflow-hidden bg-white shadow sm:rounded-lg px-10 py-10">
         <div className="px-4 py-5 sm:px-6">

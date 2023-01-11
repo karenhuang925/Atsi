@@ -22,6 +22,7 @@ class CartItem(db.Model):
         return {
             'id': self.id,
             'session_id': self.session_id,
+            'product_id': self.product_id,
             'quantity': self.quantity,
             'created_at': self.created_at,
             'updated_at': self.updated_at,

@@ -13,7 +13,7 @@ class Product(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('categories.id')))
     title = db.Column(db.String(400), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    original_price = db.Column(db.Float)
+    original_price = db.Column(db.String)
     inventory = db.Column(db.Integer)
     sold_num = db.Column(db.Integer)
     desc = db.Column(db.String(4000), nullable=False)
@@ -100,6 +100,7 @@ class Product(db.Model):
         return {
             'id': self.id,
             'preview_image': self.preview_image,
+            'category_id': self.category_id,
             'title': self.title,
             'desc':self.desc,
             'price': self.price,

@@ -89,13 +89,14 @@ export const get_product_detail_fetch = (productId) => async (dispatch) => {
 }
 
 export const add_product_fetch = (product) => async (dispatch) => {
-  const response = await fetch(`/api/products`, {
+  const response = await fetch(`/api/products/`, {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
     },
     body: JSON.stringify(product)
   });
+  console.log(product)
   if (response.ok) {
     const data = await response.json();
     if (data.errors) return
@@ -148,7 +149,10 @@ export default function reducer(state = initialState, action) {
       return newState
     case ADD_PRODUCT:
       newState = {...state,
-        currentProduct: action.payload}
+        shopProduct: {Products: [
+          ...state.shopProduct.Products,
+          action.payload
+        ]}}
       return newState
     case EDIT_PRODUCT:
       newState = {...state,
@@ -156,19 +160,23 @@ export default function reducer(state = initialState, action) {
       return newState
     case DELETE_PRODUCT:
       let productIndex;
-      for (let i = 0; i < state.product.length; i++) {
-        if (state?.product[i].id === action.payload) {
+      let Products = state.shopProduct?.Products
+      for (let i = 0; i < Products.length; i++) {
+        if (Products[i].id === action.payload) {
           productIndex = i;
           break
         }
       }
       newState = {
         ...state,
-        product: [
-          ...state.product,
-        ],
+        product: {
+          ...state,
+          categoryProduct: {...state.categoryProduct},
+          currentProduct: {...state.currentProduct},
+          shopProduct: {...state.currentProduct}
+        }
       };
-      newState.product.splice(productIndex, 1)
+      newState.product.shopProduct.Products.splice(productIndex, 1)
       return newState;
     default:
       return state;

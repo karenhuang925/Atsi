@@ -36,11 +36,12 @@ def create_a_product():
     category_id = request.json['category_id']
     title = request.json['title']
     price = request.json['price']
-    original_price = request.json['original_price'] or ""
+    original_price = request.json['original_price']
     inventory = request.json['inventory']
-    desc = request.json['desc'] or ""
+    desc = request.json['desc']
     shipping_fee = request.json['shipping_fee']
     delivery_days = request.json['delivery_days']
+
 
     newProduct = Product(
         user_id = user_id,
@@ -55,6 +56,7 @@ def create_a_product():
         shipping_fee = shipping_fee,
         delivery_days = delivery_days,
     )
+
 
     db.session.add(newProduct)
     db.session.commit()
@@ -73,9 +75,9 @@ def edit_product(id):
     category_id = request.json['category_id']
     title = request.json['title']
     price = request.json['price']
-    original_price = request.json['original_price'] or ""
+    original_price = request.json['original_price']
     inventory = request.json['inventory']
-    desc = request.json['desc'] or ""
+    desc = request.json['desc']
     shipping_fee = request.json['shipping_fee']
     delivery_days = request.json['delivery_days']
 
@@ -101,7 +103,6 @@ def edit_product(id):
     productEdit.esc = desc
     productEdit.shipping_fee = shipping_fee
     productEdit.delivery_days = delivery_days
-
     db.session.commit()
     return productEdit.to_dict_detail()
 

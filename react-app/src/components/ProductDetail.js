@@ -1,14 +1,16 @@
 
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link} from 'react-router-dom';
+import { useParams, Link, Redirect} from 'react-router-dom';
 import './ProductDetail.css'
-import { get_product_detail_fetch, delete_product_fetch } from '../store/product';
+import { get_product_detail_fetch, delete_product_fetch, get_category_products_fetch, get_user_products_fetch } from '../store/product';
 import RecommendProduct from './RecommendProduct';
+import EditProductModal from './EditProductModal';
 
 const ProductDetail = () => {
     const dispatch = useDispatch()
     const {productId} = useParams()
+    const [redirect, setRedirect] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isExpanded, setIsExpanded] = useState(true);
     const [isShippingExpanded, setIsShippingExpanded] = useState(true);
@@ -23,9 +25,17 @@ const ProductDetail = () => {
     },[productId])
     const product = useSelector((state=>state.product.currentProduct))
     const user = useSelector(state => state.session.user);
+    let cartItems = useSelector((state => state.cart?.Items))
 
     if (!product) return null
+    if (!cartItems) return null
+
     let images = product.Images
+    if (images?.length == 0 || images == undefined) {
+        images = [{url: product.preview_image}]
+    }
+
+
     const length = images?.length ? images.length : null
 
     const nextImage = () => {
@@ -47,19 +57,38 @@ const ProductDetail = () => {
     var formattedDate = [month, day].join(" ");
 
     //edit and delete button
-    const deleteSpot = (e) => {
+    if(redirect){
+        return (
+            <Redirect to={`/users/${user.id}/products/`} />
+        )
+    }
+    const deleteProdcut = (e) => {
         e.preventDefault();
-        dispatch(delete_product_fetch(product.id))
+        dispatch(delete_product_fetch(product.id)).then((()=> {
+            setRedirect(true)}))
     };
+
+    const handleAddToCart = (e) =>{
+        e.preventDefault();
+        let itemIndex = cartItems.findIndex(item => item.product.id == product.id)
+        console.log(itemIndex)
+        if (itemIndex !== -1){
+            let theItem = cartItems[itemIndex]
+            let quantity = theItem.quantity
+            let updateItems = cartItems
+            updateItems[itemIndex] = {...updateItems[itemIndex], quantity: quantity}
+            console.log(updateItems)
+        }
+    }
+
+
+
     let editAndDelete;
     if (user?.id === product?.Vendor?.id) {
         editAndDelete = (
             <div className='flex justify-evenly'>
-                <Link to={`/products/${product.id}/edit/`}>
-                    <button className='flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2 mr-3'>
-                    <i className='fa-solid fa-edit mr-2'></i> Edit this product</button>
-                </Link>
-                <button className='flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2' onClick={deleteSpot}>
+                <EditProductModal product={product}/>
+                <button className='flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2' onClick={deleteProdcut}>
                     <i className='fa-solid fa-trash mr-2'></i> Delete this product
                     </button>
             </div>
@@ -119,7 +148,9 @@ const ProductDetail = () => {
                     </div>
                     {product.inventory < 10 && <p className="text-low-red font-bold mr-3">Low in Stock</p>}
                 </div>
-                <button className=" w-full mt-10 flex items-center justify-center rounded-3xl border border-transparent bg-gray-900 py-3 px-10 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add to cart</button>
+                <button onClick={handleAddToCart}className=" w-full mt-10 flex items-center justify-center rounded-3xl border border-transparent bg-gray-900 py-3 px-10 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    Add to cart
+                </button>
                 <div div className="py-10 w-full">
                     <h3 onClick={()=>{
                         setDescHeight(isExpanded ? 0 : 100)
@@ -157,7 +188,7 @@ const ProductDetail = () => {
                 </div>
                     <RecommendProduct type='shop' value={product.Vendor.id} ></RecommendProduct>
             </div>
-            <div>
+            <div className='mb-10'>
                 <div className='more-from-this-shop px-6 flex justify-between'>
                     <p className='text-3xl'>More from this category</p>
                     <Link to={`/category/${product.Category.name.split(" ")[0]}/`}>
