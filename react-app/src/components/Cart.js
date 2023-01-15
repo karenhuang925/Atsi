@@ -120,7 +120,7 @@ export default function Cart({cartOpen, setCartOpen}) {
                             or
                             <button
                                 type="button"
-                                className="font-medium text-indigo-600 hover:text-indigo-500"
+                                className="font-medium text-indigo-600 hover:text-indigo-500 ml-2"
                                 onClick={() => setCartOpen(false)}
                             >
                                 Continue Shopping

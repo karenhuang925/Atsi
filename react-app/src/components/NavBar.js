@@ -20,10 +20,10 @@ const NavBar = () => {
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
         <LoginFormModal />
-        <div className='shoppingCart' onClick={()=>setCartOpen(true)}>
+        <button className='inline-flex justify-center rounded-xl bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none' onClick={()=>setCartOpen(true)}>
           <i className="fa-solid fa-cart-shopping"></i>
           <Cart setCartOpen={setCartOpen} cartOpen={cartOpen}/>
-        </div>
+        </button>
       </div>
 
       <ul className='headerCategory'>
