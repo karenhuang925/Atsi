@@ -1,7 +1,6 @@
 {
     "scripts": {
-        "install": "npm --prefix react-app install",
         "heroku-postbuild": "npm run build --prefix react-app",
-        "dev:react-app": "npm install --prefix react-app start"
+        "install": "npm --prefix react-app install react-app"
     }
 }
