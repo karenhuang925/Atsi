@@ -13,11 +13,10 @@ const HomePage = () => {
         dispatch(get_homepage_products_fetch())
     },[dispatch])
     const categories = useSelector((state=>state.category))
-    const products = useSelector((state=>state.product.homepageProduct.Products))
+    const products = useSelector((state=>state.product?.homepageProduct?.Products))
 
     if (!categories) return null
     if (!products) return null
-    console.log(products)
     return (
 
     <div>

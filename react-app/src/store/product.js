@@ -96,7 +96,6 @@ export const add_product_fetch = (product) => async (dispatch) => {
     },
     body: JSON.stringify(product)
   });
-  console.log(product)
   if (response.ok) {
     const data = await response.json();
     if (data.errors) return
