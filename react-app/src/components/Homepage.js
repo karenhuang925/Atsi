@@ -26,39 +26,39 @@ const HomePage = () => {
             </p>
             <div className='BannerImage'>
                 <ul className='BannerImageList'>
-                    <li >
+                    <li key='gift'>
                         <NavLink to='/categories/gift' exact={true} className='BannerImageItem'>
                             <img className="BannerRoundImage" alt='gift' src={categories[8].preview_image} />
                             <p>Personalized Gifts</p>
                         </NavLink>
                     </li>
-                    <li >
+                    <li key='home'>
                         <NavLink to='/categories/home' exact={true} className='BannerImageItem'>
                             <img className="BannerRoundImage" alt='plant' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrNLhvA_G9H4oZm7pRQS6qRJEMavzok8KsxA&usqp=CAU' />
                             <p>Plants</p>
 
                         </NavLink>
                     </li>
-                    <li >
+                    <li key='clothing'>
                         <NavLink to='/categories/clothing' exact={true} className='BannerImageItem'>
                             <img className="BannerRoundImage" alt='clothing' src={categories[2].preview_image} />
                             <p>Clothing & Shoes</p>
                         </NavLink>
                     </li>
-                    <li >
+                    <li key='jewelry'>
                     <NavLink to='/categories/jewelry' exact={true} className='BannerImageItem'>
                         <img className="BannerRoundImage" alt='jewelry' src={categories[1].preview_image} />
                             <p>Jewelry</p>
 
                     </NavLink>
                     </li>
-                    <li >
+                    <li key='home2'>
                     <NavLink to='/categories/home' exact={true} className='BannerImageItem'>
                     <img className="BannerRoundImage" alt='furniture' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRggcujbuOWBzqySN04EzsCNTsqeX1vn6WXqw&usqp=CAU' />
                             <p>Furniture</p>
                     </NavLink>
                     </li>
-                    <li >
+                    <li key='sale'>
                     <NavLink to='/categories/sale' exact={true} className='BannerImageItem'>
                     <img className="BannerRoundImage" alt='sale' src={categories[9].preview_image} />
                             <p>On Sale</p>
@@ -90,7 +90,7 @@ const HomePage = () => {
                                     </Link>
                                 </h3>
                                 <div className='flex align-center'>
-                                    {[...Array(5)].map((e, i) => <i className="fa fa-star checked text-xs "></i>)}
+                                    {[...Array(5)].map((e, i) => <i key={i} className="fa fa-star checked text-xs "></i>)}
                                     <p>&nbsp;</p>
                                     <p className="text-sm text-gray-500 mt-0">({product.sold_num})</p>
                                 </div>
