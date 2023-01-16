@@ -10,7 +10,7 @@ ENV REACT_APP_BASE_URL=https://atsi.herokuapp.com/
 RUN npm install
 RUN npm run build
 
-FROM python:THE.EXACT.PYTHON.VERSION.IN.YOUR.PIPFILE
+FROM python:3.9
 
 # Setup Flask environment
 ENV FLASK_APP=app
@@ -20,7 +20,7 @@ ENV SQLALCHEMY_ECHO=True
 EXPOSE 8000
 
 WORKDIR /var/www
-COPY backend/. .
+COPY app/. .
 COPY . .
 COPY --from=build-stage /react-app/build/* app/static/
 

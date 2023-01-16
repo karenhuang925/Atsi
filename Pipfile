@@ -29,3 +29,6 @@ psycopg2-binary = "*"
 dj-database-url = "*"
 
 [dev-packages]
+
+[requires]
+python_version = "3.9"
