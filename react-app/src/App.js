@@ -10,6 +10,7 @@ import User from './components/User';
 import HomePage from './components/Homepage'
 import ProductDetail from './components/ProductDetail'
 import ProfileProduct from './components/ProfileProduct'
+import PlaceOrder from './components/PlaceOrder'
 import { authenticate } from './store/session';
 
 function App() {
@@ -39,6 +40,9 @@ function App() {
         </Route>
         <Route path='/products/:productId/' exact={true} >
           <ProductDetail />
+        </Route>
+        <Route path='/order/new' exact={true} >
+          <PlaceOrder />
         </Route>
         <Route path='/' exact={true} >
           <HomePage />

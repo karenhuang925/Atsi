@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { logout } from '../../store/session';
+import {logoutClearCart} from '../../store/cart'
 
 
 function LoginFormModal() {
@@ -17,7 +18,9 @@ function LoginFormModal() {
         return classes.filter(Boolean).join(' ')
     }
     const onLogout = async (e) => {
-        await dispatch(logout());
+        dispatch(logout());
+        dispatch(logoutClearCart())
+        return (<Redirect to={'/'} />)
     };
 
     if (user) {

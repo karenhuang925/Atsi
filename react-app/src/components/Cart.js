@@ -3,18 +3,36 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { get_cart_fetch } from '../store/cart'
+import { get_cart_fetch, edit_cart_fetch, create_cart_fetch, delete_cart_fetch } from '../store/cart'
+import { useHistory } from 'react-router-dom'
 
 export default function Cart({cartOpen, setCartOpen}) {
+    let history = useHistory();
     const dispatch = useDispatch()
+    const user = useSelector(state => state.session.user);
+
 
     useEffect(()=> {
         dispatch(get_cart_fetch())
-    },[dispatch])
+    },[dispatch, user])
 
-    const products = useSelector((state => state.cart?.Items))
     const cart = useSelector((state => state.cart))
-    if (!products) return null
+    const products = useSelector((state => state.cart?.Items))
+
+    const removeItemHandle = (id) => {
+        let updateItem = {product_id: id, quantity: 0}
+        dispatch(edit_cart_fetch(updateItem))
+    }
+
+    const checkoutHandle = () => {
+        setCartOpen(false)
+        dispatch(delete_cart_fetch())
+        history.push('/order/new')
+    }
+
+    // if(!cart){
+    //     return null
+    // }
     return (
         <Transition.Root show={cartOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10 " onClose={setCartOpen}>
@@ -62,7 +80,13 @@ export default function Cart({cartOpen, setCartOpen}) {
                         <div className="mt-8">
                             <div className="flow-root">
                             <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                {products.map((product) => (
+                                {products?.length == 0 && (
+                                    <div className="flex py-6"><h1>Empty Cart</h1></div>
+                                )}
+                                {cart == null && (
+                                    <div className="flex py-6"><h1>Empty Cart</h1></div>
+                                )}
+                                {products?.map((product) => (
                                 <li key={product.id} className="flex py-6">
                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     <img
@@ -75,10 +99,10 @@ export default function Cart({cartOpen, setCartOpen}) {
                                     <div className="ml-4 flex flex-1 flex-col">
                                     <div>
                                         <div className="flex justify-between text-base font-medium text-gray-900">
-                                        <h3 className='wt-text-truncate'>
+                                        <h3 className='overflow-hidden wt-text-truncate'>
                                             <a href={`/products/${product.product.id}`}>{product.product.title}</a>
                                         </h3>
-                                        <p className="ml-4">{product.product.price}</p>
+                                        <p className="ml-4">${product.product.price}</p>
                                         </div>
                                     </div>
                                     <div className="flex flex-1 items-end justify-between text-sm">
@@ -88,6 +112,7 @@ export default function Cart({cartOpen, setCartOpen}) {
                                         <button
                                             type="button"
                                             className="font-medium text-indigo-600 hover:text-indigo-500"
+                                            onClick={()=>removeItemHandle(product.product_id)}
                                         >
                                             Remove
                                         </button>
@@ -104,17 +129,23 @@ export default function Cart({cartOpen, setCartOpen}) {
                         <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                         <div className="flex justify-between text-base font-medium text-gray-900">
                             <p>Subtotal</p>
-                            <p>{cart.amount}</p>
+                            <p>${cart?.amount?.toFixed(2) || 0}</p>
                         </div>
-                        <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                        <div className="mt-6">
+                        <p className="mt-0.5 text-sm text-gray-500">By clicking place order, you agree to pay this amount</p>
+                        {cart ? <div className="mt-6">
                             <a
-                            href="#"
-                            className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                            onClick={checkoutHandle}
+                            className="cursor-pointer flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                             >
-                            Checkout
+                            Place Order
                             </a>
-                        </div>
+                        </div> : <div className="mt-6 ">
+                            <div
+                            className="cursor-not-allowed flex items-center justify-center rounded-md border border-transparent bg-gray-500 px-6 py-3 text-base font-medium text-white shadow-sm "
+                            >
+                            Place Order
+                            </div>
+                        </div>}
                         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                             <p>
                             or

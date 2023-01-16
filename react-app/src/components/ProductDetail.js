@@ -7,15 +7,21 @@ import { get_product_detail_fetch, delete_product_fetch } from '../store/product
 import { edit_cart_fetch } from '../store/cart';
 import RecommendProduct from './RecommendProduct';
 import EditProductModal from './EditProductModal';
+import { Modal } from '../context/Modal';
+import LoginForm from './auth/LoginForm';
+
 
 const ProductDetail = () => {
     const dispatch = useDispatch()
     const {productId} = useParams()
     const [redirect, setRedirect] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [added, setAdded] = useState('Add to cart');
     const [isExpanded, setIsExpanded] = useState(true);
     const [isShippingExpanded, setIsShippingExpanded] = useState(true);
     const [descHeight, setDescHeight] = useState(60);
+    const [showLoginModal, setShowLoginModal] = useState(false);
+
 
 
     useEffect(()=> {
@@ -25,11 +31,12 @@ const ProductDetail = () => {
         dispatch(get_product_detail_fetch(productId))
     },[productId])
     const product = useSelector((state=>state.product.currentProduct))
-    const user = useSelector(state => state.session.user);
+    const user = useSelector(state => state.session?.user);
     let cartItems = useSelector((state => state.cart?.Items))
 
+
+
     if (!product) return null
-    if (!cartItems) return null
 
     let images = product.Images
     if (images?.length == 0 || images == undefined) {
@@ -69,14 +76,28 @@ const ProductDetail = () => {
             setRedirect(true)}))
     };
 
+    //Add to Cart handle
     const handleAddToCart = (e) =>{
         e.preventDefault();
-        let updateItem
-        let itemIndex = cartItems.findIndex(item => item.product_id == product.id)
-        if (itemIndex !== -1){
-            updateItem = {product_id: cartItems[itemIndex].product_id, quantity: cartItems[itemIndex].quantity + 1}
+        if (user === null){
+            setShowLoginModal(true)
         }
-        dispatch(edit_cart_fetch(updateItem))
+        else {
+            setAdded('Added')
+            let updateItem
+            let itemIndex = cartItems?.findIndex(item => item.product_id == product.id) || -1
+            if (itemIndex !== -1){
+                updateItem = {product_id: cartItems[itemIndex].product_id, quantity: cartItems[itemIndex].quantity + 1}
+            }
+            if (itemIndex === -1){
+                updateItem = {product_id: product.id, quantity: 1}
+            }
+            dispatch(edit_cart_fetch(updateItem))
+
+            setTimeout(() => {
+                setAdded('Add to cart')
+            }, 3000)
+        }
     }
 
 
@@ -91,10 +112,18 @@ const ProductDetail = () => {
                     </button>
             </div>
         );
+    } else {
+        editAndDelete = (<></>)
     }
 
     return (
+
         <div className="bg-white">
+            {showLoginModal && (
+                <Modal onClose={() => setShowLoginModal(false)} >
+                    <LoginForm setShowLoginModal={setShowLoginModal} />
+                </Modal>
+            )}
             <div className="pt-6">
 
             {/* <!-- Image gallery --> */}
@@ -147,7 +176,7 @@ const ProductDetail = () => {
                     {product.inventory < 10 && <p className="text-low-red font-bold mr-3">Low in Stock</p>}
                 </div>
                 <button onClick={handleAddToCart}className=" w-full mt-10 flex items-center justify-center rounded-3xl border border-transparent bg-gray-900 py-3 px-10 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    Add to cart
+                    {added}
                 </button>
                 <div div className="py-10 w-full">
                     <h3 onClick={()=>{

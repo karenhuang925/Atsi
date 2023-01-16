@@ -132,8 +132,9 @@ export default function reducer(state = initialState, action) {
   let newState;
   switch (action.type) {
     case SET_HOMEPAGE_PRODUCT:
-      newState = [...state,
-                  ...action.payload.Products]
+      newState = {...state,
+        homepageProduct:action.payload
+      }
       return newState
     case SET_CATEGORY_PRODUCT:
       newState = {...state,

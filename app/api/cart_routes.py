@@ -17,6 +17,13 @@ def cart_info():
         filter(CartItem.quantity > 0).\
         all()
 
+    session['amount'] = 0
+    for item in items:
+        total = item.product.price * item.quantity
+        session['amount'] += total
+
+    db.session.commit()
+
     Merge(session, {'Items': [item.to_dict() for item in items]})
     return session
 
@@ -55,16 +62,24 @@ def edit_cart():
 
     currentSession = CartSession.query.\
     filter(CartSession.customer_id == user_id).\
-    one_or_none().to_dict()
+    one_or_none()
 
     if not currentSession:
-        return {"errors": ["Cart session couldn't be found"]}, 404
+        currentSession = CartSession(
+            customer_id = user_id,
+            amount = 0
+        )
+        db.session.add(currentSession)
+        db.session.commit()
+
+    currentSession = currentSession.to_dict()
 
 # whether to add a cart item or just to change the quantity in cart
     theItem = CartItem.query.\
         filter(CartItem.product_id == product_id).\
         filter(CartItem.session_id == currentSession['id']).\
         one_or_none()
+
 
     if theItem:
         theItem.quantity = quantity

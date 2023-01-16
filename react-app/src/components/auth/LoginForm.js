@@ -16,6 +16,7 @@ const LoginForm = ({setShowLoginModal}) => {
     if (data) {
       setErrors(data);
     }
+    setShowLoginModal(false)
   };
 
   const updateEmail = (e) => {

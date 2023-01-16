@@ -3,6 +3,7 @@ const SET_CART = 'cart/SET_CART';
 const CREATE_CART = 'cart/CREATE_CART';
 const EDIT_CART = 'cart/EDIT_CART';
 const DELETE_CART = 'cart/DELETE_CART';
+const LOGOUT_CLEAR_CART = 'cart/LOGOUT_CLEAR_CART';
 
 const setCart = (cart) => ({
   type: SET_CART,
@@ -18,6 +19,9 @@ const editCart = (cart) => ({
 });
 const deleteCart = () => ({
   type: DELETE_CART,
+});
+const clearCart = () => ({
+  type: LOGOUT_CLEAR_CART,
 });
 
 const initialState =  null ;
@@ -76,17 +80,37 @@ export const delete_cart_fetch = () => async (dispatch) => {
     dispatch(deleteCart());
   }
 }
+export const logoutClearCart = () => async (dispatch) => {
+    dispatch(clearCart());
+}
 
 export default function reducer(state = initialState, action) {
+  let newState
   switch (action.type) {
     case SET_CART:
       return action.payload
     case CREATE_CART:
       return action.payload
     case EDIT_CART:
-      return action.payload
+      newState = {
+        Items: [
+          {
+            ...action.payload.Items,
+            product: {
+              ...action.payload.Items.product,
+              Vendor: {
+                ...action.payload.Items.product?.Vendor
+              },
+            },
+          }
+        ],
+        ...action.payload
+      }
+      return newState
     case DELETE_CART:
-      return { cart: null }
+      return  null
+    case LOGOUT_CLEAR_CART:
+      return  null
     default:
       return state;
   }
