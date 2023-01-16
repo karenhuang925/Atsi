@@ -2,26 +2,26 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 
 
-class CartItem(db.Model):
-    __tablename__ = 'cartItems'
+class Citem(db.Model):
+    __tablename__ = 'citems'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    cartSession_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('cartSessions.id')))
+    csession_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('csessions.id')))
     product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('products.id')))
     quantity = db.Column(db.Integer)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    cartSession = db.relationship("CartSession", back_populates="cartItems")
-    product = db.relationship("Product", back_populates="cartItems")
+    csession = db.relationship("Csession", back_populates="citems")
+    product = db.relationship("Product", back_populates="citems")
 
     def to_dict(self):
         return {
             'id': self.id,
-            'cartSession_id': self.cartSession_id,
+            'csession_id': self.csession_id,
             'product_id': self.product_id,
             'quantity': self.quantity,
             'created_at': self.created_at,

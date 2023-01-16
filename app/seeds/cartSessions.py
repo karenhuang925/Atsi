@@ -1,9 +1,9 @@
-from app.models import db, CartSession, environment, SCHEMA
+from app.models import db, Csession, environment, SCHEMA
 
 
 # Adds a demo user, you can add other users here if you want
-def seed_cartSessions():
-    session = CartSession(
+def seed_csessions():
+    session = Csession(
         customer_id = 1,
     )
 
@@ -17,10 +17,10 @@ def seed_cartSessions():
 # incrementing primary key, CASCADE deletes any dependent entities.  With
 # sqlite3 in development you need to instead use DELETE to remove all data and
 # it will reset the primary keys for you as well.
-def undo_cartSessions():
+def undo_csessions():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.cartSessions RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.csessions RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM cartSessions")
+        db.session.execute("DELETE FROM csessions")
 
     db.session.commit()

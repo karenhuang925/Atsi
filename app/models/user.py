@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
     location = db.Column(db.String(40))
 
     products = db.relationship('Product', back_populates='user', cascade="all, delete-orphan")
-    cartSessions = db.relationship('CartSession', back_populates='user', cascade="all, delete-orphan")
+    csessions = db.relationship('Csession', back_populates='user', cascade="all, delete-orphan")
 
     @property
     def password(self):

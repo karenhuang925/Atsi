@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, User, Product, CartItem, CartSession
+from app.models import db, User, Product, Citem, Csession
 
 cart_routes = Blueprint('carts', __name__)
 def Merge(dict1, dict2):
@@ -11,21 +11,21 @@ def Merge(dict1, dict2):
 def cart_info():
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
-    cartSession = CartSession.query.filter(CartSession.customer_id == user_id).one().to_dict()
-    items = CartItem.query.\
-        filter(CartItem.cartSession_id == cartSession['id']).\
-        filter(CartItem.quantity > 0).\
+    csession = Csession.query.filter(Csession.customer_id == user_id).one().to_dict()
+    items = Citem.query.\
+        filter(Citem.csession_id == csession['id']).\
+        filter(Citem.quantity > 0).\
         all()
 
-    cartSession['amount'] = 0
+    csession['amount'] = 0
     for item in items:
         total = item.product.price * item.quantity
-        cartSession['amount'] += total
+        csession['amount'] += total
 
     db.session.commit()
 
-    Merge(cartSession, {'Items': [item.to_dict() for item in items]})
-    return cartSession
+    Merge(csession, {'Items': [item.to_dict() for item in items]})
+    return csession
 
 @cart_routes.route('/', methods=['POST'])
 @login_required
@@ -33,13 +33,13 @@ def new_cart_session():
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
-    existSession = CartSession.query.\
-        filter(CartSession.customer_id == user_id).\
+    existSession = Csession.query.\
+        filter(Csession.customer_id == user_id).\
         one_or_none()
     if existSession:
         return {"errors": ["This customer's cart session already exists"]}, 403
 
-    newSession = CartSession(
+    newSession = Csession(
         customer_id = user_id,
         amount = 0
     )
@@ -60,12 +60,12 @@ def edit_cart():
     product_id = request.json['product_id']
     quantity = request.json['quantity']
 
-    currentSession = CartSession.query.\
-    filter(CartSession.customer_id == user_id).\
+    currentSession = Csession.query.\
+    filter(Csession.customer_id == user_id).\
     one_or_none()
 
     if not currentSession:
-        currentSession = CartSession(
+        currentSession = Csession(
             customer_id = user_id,
             amount = 0
         )
@@ -75,16 +75,16 @@ def edit_cart():
     currentSession = currentSession.to_dict()
 
 # whether to add a cart item or just to change the quantity in cart
-    theItem = CartItem.query.\
-        filter(CartItem.product_id == product_id).\
-        filter(CartItem.cartSession_id == currentSession['id']).\
+    theItem = Citem.query.\
+        filter(Citem.product_id == product_id).\
+        filter(Citem.csession_id == currentSession['id']).\
         one_or_none()
 
 
     if theItem:
         theItem.quantity = quantity
     else:
-        newItem = CartItem(
+        newItem = Citem(
             product_id = product_id,
             quantity = quantity,
             cartSession_id = currentSession['id']
@@ -92,9 +92,9 @@ def edit_cart():
         db.session.add(newItem)
 
 # get all products in the session agin
-    items = CartItem.query.\
-        filter(CartItem.cartSession_id == currentSession['id']).\
-        filter(CartItem.quantity > 0).\
+    items = Citem.query.\
+        filter(Citem.cartSession_id == currentSession['id']).\
+        filter(Citem.quantity > 0).\
         all()
 
 # to calculate cart total amount
@@ -114,8 +114,8 @@ def delete_cart():
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
-    currentSession = CartSession.query.\
-    filter(CartSession.customer_id == user_id).\
+    currentSession = Csession.query.\
+    filter(Csession.customer_id == user_id).\
     one_or_none()
 
     if not currentSession:

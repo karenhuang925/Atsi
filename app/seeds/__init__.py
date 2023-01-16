@@ -3,8 +3,8 @@ from .users import seed_users, undo_users
 from .categories import seed_categories, undo_categories
 from .products import seed_products, undo_products
 from .images import seed_images, undo_images
-from .cartSessions import seed_cartSessions, undo_cartSessions
-from .cartItems import seed_cartItems, undo_cartItems
+from .cartSessions import seed_csessions, undo_csessions
+from .cartItems import seed_citems, undo_citems
 
 
 from app.models.db import db, environment, SCHEMA
@@ -22,8 +22,8 @@ def seed():
         # command, which will  truncate all tables prefixed with
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
-        undo_cartItems()
-        undo_cartSessions()
+        undo_citems()
+        undo_csessions()
         undo_images()
         undo_products()
         undo_categories()
@@ -32,8 +32,8 @@ def seed():
     seed_categories()
     seed_products()
     seed_images()
-    seed_cartSessions()
-    seed_cartItems()
+    seed_csessions()
+    seed_citems()
     # Add other seed functions here
 
 
@@ -44,5 +44,5 @@ def undo():
     undo_categories()
     undo_products()
     undo_images()
-    undo_cartSessions()
-    undo_cartItems()
+    undo_csessions()
+    undo_citems()

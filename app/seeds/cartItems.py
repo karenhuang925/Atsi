@@ -1,12 +1,12 @@
-from app.models import db, CartItem, environment, SCHEMA
+from app.models import db, Citem, environment, SCHEMA
 
 
 # Adds a demo user, you can add other users here if you want
-def seed_cartItems():
+def seed_citems():
     object = [
-        CartItem(session_id = 1, product_id = 1, quantity = 3),
-        CartItem(session_id = 1, product_id = 2, quantity = 1),
-        CartItem(session_id = 1, product_id = 5, quantity = 2)
+        Citem(csession_id = 1, product_id = 1, quantity = 3),
+        Citem(csession_id = 1, product_id = 2, quantity = 1),
+        Citem(csession_id = 1, product_id = 5, quantity = 2)
     ]
 
     db.session.add_all(object)
@@ -19,10 +19,10 @@ def seed_cartItems():
 # incrementing primary key, CASCADE deletes any dependent entities.  With
 # sqlite3 in development you need to instead use DELETE to remove all data and
 # it will reset the primary keys for you as well.
-def undo_cartItems():
+def undo_citems():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.cartItems RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.citems RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM cartItems")
+        db.session.execute("DELETE FROM citems")
 
     db.session.commit()

@@ -2,8 +2,8 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 
 
-class CartSession(db.Model):
-    __tablename__ = 'cartSessions'
+class Csession(db.Model):
+    __tablename__ = 'csessions'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -14,8 +14,8 @@ class CartSession(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    user = db.relationship("User", back_populates="cartSessions")
-    cartItems = db.relationship("CartItem", back_populates="cartSession", cascade="all, delete-orphan")
+    user = db.relationship("User", back_populates="csessions")
+    citems = db.relationship("Citem", back_populates="csession", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
