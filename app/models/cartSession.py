@@ -15,7 +15,7 @@ class CartSession(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
     user = db.relationship("User", back_populates="cartSessions")
-    cartItems = db.relationship("CartItem", back_populates="session", cascade="all, delete-orphan")
+    cartItems = db.relationship("CartItem", back_populates="cartSession", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

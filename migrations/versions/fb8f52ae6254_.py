@@ -37,6 +37,8 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
+
     op.create_table('categories',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=40), nullable=False),
@@ -47,6 +49,9 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE categories SET SCHEMA {SCHEMA};")
+
+
+
     op.create_table('products',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -68,6 +73,9 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE products SET SCHEMA {SCHEMA};")
+
+
+
     op.create_table('images',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('url', sa.String(length=255), nullable=False),
@@ -79,6 +87,9 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE images SET SCHEMA {SCHEMA};")
+
+
+
     op.create_table('cartSessions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('customer_id', sa.Integer(), nullable=True),
@@ -90,6 +101,10 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE cartSessions SET SCHEMA {SCHEMA};")
+
+
+
+
     op.create_table('cartItems',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('session_id', sa.Integer(), nullable=True),
