@@ -11,21 +11,21 @@ def Merge(dict1, dict2):
 def cart_info():
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
-    session = CartSession.query.filter(CartSession.customer_id == user_id).one().to_dict()
+    cartSession = CartSession.query.filter(CartSession.customer_id == user_id).one().to_dict()
     items = CartItem.query.\
-        filter(CartItem.session_id == session['id']).\
+        filter(CartItem.cartSession_id == cartSession['id']).\
         filter(CartItem.quantity > 0).\
         all()
 
-    session['amount'] = 0
+    cartSession['amount'] = 0
     for item in items:
         total = item.product.price * item.quantity
-        session['amount'] += total
+        cartSession['amount'] += total
 
     db.session.commit()
 
-    Merge(session, {'Items': [item.to_dict() for item in items]})
-    return session
+    Merge(cartSession, {'Items': [item.to_dict() for item in items]})
+    return cartSession
 
 @cart_routes.route('/', methods=['POST'])
 @login_required
@@ -77,7 +77,7 @@ def edit_cart():
 # whether to add a cart item or just to change the quantity in cart
     theItem = CartItem.query.\
         filter(CartItem.product_id == product_id).\
-        filter(CartItem.session_id == currentSession['id']).\
+        filter(CartItem.cartSession_id == currentSession['id']).\
         one_or_none()
 
 
@@ -87,13 +87,13 @@ def edit_cart():
         newItem = CartItem(
             product_id = product_id,
             quantity = quantity,
-            session_id = currentSession['id']
+            cartSession_id = currentSession['id']
         )
         db.session.add(newItem)
 
 # get all products in the session agin
     items = CartItem.query.\
-        filter(CartItem.session_id == currentSession['id']).\
+        filter(CartItem.cartSession_id == currentSession['id']).\
         filter(CartItem.quantity > 0).\
         all()
 
