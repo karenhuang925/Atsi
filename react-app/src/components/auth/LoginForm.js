@@ -28,6 +28,16 @@ const LoginForm = ({setShowLoginModal}) => {
     setPassword(e.target.value);
   };
 
+  const demoUserSignIn = async(e) =>{
+    e.preventDefault();
+    const data = await dispatch(login("rstanmore0@twitpic.com", "password"));
+    if (data) {
+      setErrors(data);
+    }else{
+      setShowLoginModal(false)
+    }
+  }
+
 
   return (
     <div className='auth_modal'>
@@ -62,6 +72,7 @@ const LoginForm = ({setShowLoginModal}) => {
 
           />
           <button type='submit' className=" w-full mt-10 flex items-center justify-center rounded-3xl border border-transparent bg-gray-900 py-3 px-10 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Sign in</button>
+          <button onClick={demoUserSignIn} className=" w-full mt-10 flex items-center justify-center rounded-3xl border border-transparent bg-gray-900 py-3 px-10 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Demo User Sign In</button>
           
         </div>
       </form>

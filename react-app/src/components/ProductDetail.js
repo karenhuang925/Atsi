@@ -91,7 +91,6 @@ const ProductDetail = () => {
                 itemIndex = cartItems.findIndex(item => item.product_id == product.id)
             }
             else itemIndex = -1
-            console.log(itemIndex)
             if (itemIndex !== -1){
                 updateItem = {product_id: cartItems[itemIndex].product_id, quantity: cartItems[itemIndex].quantity + 1}
             }
