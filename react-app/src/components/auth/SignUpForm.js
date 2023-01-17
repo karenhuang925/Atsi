@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { create_cart_fetch } from '../../store/cart';
@@ -15,6 +15,7 @@ const SignUpForm = () => {
   const [disableSubmit, setDisableSubmit] = useState(true);
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+  const history = useHistory()
 
   useEffect(() => {
     const errors = [];
@@ -39,7 +40,8 @@ const SignUpForm = () => {
       errors.push("- Passwords don't match")
     }
     dispatch(create_cart_fetch())
-    
+    history.push('/')
+
   };
 
   const updateFirstName = (e) => {
@@ -59,7 +61,7 @@ const SignUpForm = () => {
   };
 
   if (user) {
-    return <Redirect to='/' />;
+    history.push('/')
   }
 
   return (
