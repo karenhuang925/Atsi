@@ -78,12 +78,15 @@ const ProductDetail = () => {
     };
 
     //Add to Cart handle
-    const handleAddToCart = (e) =>{
+    const handleAddToCart = async(e) =>{
         e.preventDefault();
         if (user === null){
             setShowLoginModal(true)
         }             
         else {
+            if (cart === null){
+                await dispatch(create_cart_fetch())
+            }
             setAdded('Added')
             let updateItem
             let itemIndex 
