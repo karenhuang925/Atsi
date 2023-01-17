@@ -8,13 +8,14 @@ const PlaceOrder = () => {
 
     return (
             <div className="contain">
-                <div className="congrats">
-                    <h1>Congrat<span className="hide">ulation</span>s !</h1>
-                        <div className="text">
-                            <p>{user.first_name}, you have placed the order
-                            </p>
-                        </div>
-                    <p className="regards">Atsi Team</p>
+                <div className="congrats py-8 flex-row ">
+                    <h1 className="py-3">Congrat<span className="hide">ulation</span>s !</h1>
+                    <div className="text">
+                        <p>{user.first_name}, you have placed the order
+                        </p>
+                    </div>
+                    <p className="text">Thank you</p>
+                    <p className="regards mt-10">Atsi Team</p>
                 </div>
             </div>
 

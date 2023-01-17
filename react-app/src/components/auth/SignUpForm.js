@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
 import { LockClosedIcon } from '@heroicons/react/20/solid'
+import { create_cart_fetch } from '../../store/cart';
 
 
 const SignUpForm = () => {
@@ -37,6 +38,8 @@ const SignUpForm = () => {
     else {
       errors.push("- Passwords don't match")
     }
+    dispatch(create_cart_fetch())
+    
   };
 
   const updateFirstName = (e) => {

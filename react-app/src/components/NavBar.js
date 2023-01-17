@@ -15,8 +15,8 @@ const NavBar = () => {
         <NavLink to='/' exact={true} >
           <img className='logo' src={logo} alt="logo"/>
         </NavLink>
-        <input className='searchBar' placeholder='Search for anything'></input>
-        <button className='searchButton'>
+        <input className='searchBar cursor-not-allowed' placeholder='Search for anything'></input>
+        <button className='searchButton cursor-not-allowed'>
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
         <LoginFormModal />
@@ -27,48 +27,48 @@ const NavBar = () => {
       </div>
 
       <ul className='headerCategory'>
-        <li className='eachCategory'>
-          <NavLink to='/categories/holiday/' exact={true}>
+        <li className='eachCategory '>
+          <NavLink to='/categories/holiday/' className='cursor-not-allowed' exact={true}>
             Holiday Shop
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/jewelry/' exact={true}>
+          <NavLink to='/categories/jewelry/' className='cursor-not-allowed' exact={true}>
             Jewerlry & Accessories
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/clothing/' exact={true}>
+          <NavLink to='/categories/clothing/' className='cursor-not-allowed' exact={true}>
             Clothing & Shoes
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/home/' exact={true}>
+          <NavLink to='/categories/home/'className='cursor-not-allowed' exact={true}>
             Home & Living
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/wedding/' exact={true}>
+          <NavLink to='/categories/wedding/'className='cursor-not-allowed' exact={true}>
             Wedding & Party
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/toy/' exact={true}>
+          <NavLink to='/categories/toy/' className='cursor-not-allowed' exact={true}>
             Toy & Entertainment
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/Art/' exact={true}>
+          <NavLink to='/categories/Art/' className='cursor-not-allowed' exact={true}>
             Art & Collectibles
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/craft/' exact={true}>
+          <NavLink to='/categories/craft/' className='cursor-not-allowed' exact={true}>
             Craft Supplies
           </NavLink>
         </li>
         <li className='eachCategory'>
-          <NavLink to='/categories/gift/' exact={true}>
+          <NavLink to='/categories/gift/' className='cursor-not-allowed' exact={true}>
             Gift & Gift Cards
           </NavLink>
         </li>

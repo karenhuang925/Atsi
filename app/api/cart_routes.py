@@ -62,17 +62,8 @@ def edit_cart():
 
     currentSession = Csession.query.\
     filter(Csession.customer_id == user_id).\
-    one_or_none()
+    one_or_none().to_dict()
 
-    if not currentSession:
-        currentSession = Csession(
-            customer_id = user_id,
-            amount = 0
-        )
-        db.session.add(currentSession)
-        db.session.commit()
-
-    currentSession = currentSession.to_dict()
 
 # whether to add a cart item or just to change the quantity in cart
     theItem = Citem.query.\
@@ -87,13 +78,13 @@ def edit_cart():
         newItem = Citem(
             product_id = product_id,
             quantity = quantity,
-            cartSession_id = currentSession['id']
+            csession_id = currentSession['id']
         )
         db.session.add(newItem)
 
 # get all products in the session agin
     items = Citem.query.\
-        filter(Citem.cartSession_id == currentSession['id']).\
+        filter(Citem.csession_id == currentSession['id']).\
         filter(Citem.quantity > 0).\
         all()
 

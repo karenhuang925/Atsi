@@ -89,6 +89,7 @@ export const get_product_detail_fetch = (productId) => async (dispatch) => {
 }
 
 export const add_product_fetch = (product) => async (dispatch) => {
+  console.log(product)
   const response = await fetch(`/api/products/`, {
     method: "POST",
     headers: {
@@ -96,25 +97,32 @@ export const add_product_fetch = (product) => async (dispatch) => {
     },
     body: JSON.stringify(product)
   });
-  if (response.ok) {
-    const data = await response.json();
-    if (data.errors) return
-    dispatch(addProduct(data));
+  const data = await response.json();
+  if(response.status === 400){
+    if (data.errors) {
+        return data.errors;
+    }
   }
+  dispatch(addProduct(data)); 
+
 }
 export const edit_product_fetch = (product, id) => async (dispatch) => {
   const response = await fetch(`/api/products/${id}`, {
     method: "PUT",
     headers: {
-        "Content-Type": "application/json"
+      "Content-Type": "application/json"
     },
     body: JSON.stringify(product)
   });
-  if (response.ok) {
-    const data = await response.json();
-    if (data.errors) return
-    dispatch(editProduct(data));
+  console.log(response)
+  const data = await response.json();
+  console.log(data)
+  if(response.status === 400){
+    if (data.errors) {
+        return data.errors;
+    }
   }
+  dispatch(editProduct(data));
 }
 export const delete_product_fetch = (id) => async (dispatch) => {
   const response = await fetch(`/api/products/${id}`, {
@@ -176,7 +184,7 @@ export default function reducer(state = initialState, action) {
           shopProduct: {...state.currentProduct}
         }
       };
-      newState.product.shopProduct.Products.splice(productIndex, 1)
+      newState.shopProduct.Products.splice(productIndex, 1)
       return newState;
     default:
       return state;

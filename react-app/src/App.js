@@ -11,6 +11,8 @@ import HomePage from './components/Homepage'
 import ProductDetail from './components/ProductDetail'
 import ProfileProduct from './components/ProfileProduct'
 import PlaceOrder from './components/PlaceOrder'
+import NotFound from './components/NotFound'
+import Footer from './components/Footer'
 import { authenticate } from './store/session';
 
 function App() {
@@ -47,7 +49,11 @@ function App() {
         <Route path='/' exact={true} >
           <HomePage />
         </Route>
+        <Route>
+          <NotFound/>
+        </Route>
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }

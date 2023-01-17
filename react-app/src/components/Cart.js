@@ -132,7 +132,7 @@ export default function Cart({cartOpen, setCartOpen}) {
                             <p>${cart?.amount?.toFixed(2) || 0}</p>
                         </div>
                         <p className="mt-0.5 text-sm text-gray-500">By clicking place order, you agree to pay this amount</p>
-                        {cart ? <div className="mt-6">
+                        {(cart && cart.Items.length>0) ? <div className="mt-6">
                             <a
                             onClick={checkoutHandle}
                             className="cursor-pointer flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"

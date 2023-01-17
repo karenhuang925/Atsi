@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link, Redirect} from 'react-router-dom';
 import './ProductDetail.css'
 import { get_product_detail_fetch, delete_product_fetch } from '../store/product';
-import { edit_cart_fetch } from '../store/cart';
+import { create_cart_fetch, edit_cart_fetch } from '../store/cart';
 import RecommendProduct from './RecommendProduct';
 import EditProductModal from './EditProductModal';
 import { Modal } from '../context/Modal';
@@ -32,7 +32,8 @@ const ProductDetail = () => {
     },[productId])
     const product = useSelector((state=>state.product.currentProduct))
     const user = useSelector(state => state.session?.user);
-    let cartItems = useSelector((state => state.cart?.Items))
+    const cart = useSelector((state => state.cart))
+    let cartItems = cart?.Items
 
 
 
@@ -81,7 +82,7 @@ const ProductDetail = () => {
         e.preventDefault();
         if (user === null){
             setShowLoginModal(true)
-        }
+        }             
         else {
             setAdded('Added')
             let updateItem
@@ -209,8 +210,8 @@ const ProductDetail = () => {
             <div>
                 <div className='more-from-this-shop px-6 flex justify-between'>
                     <p className='text-3xl'>More from this shop</p>
-                    <Link to={`/users/${product.Vendor.id}`}>
-                        <button className="flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2">See more</button>
+                    <Link to={`/users/${product.Vendor.id}/products`}>
+                        <button className="flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2 cursor-not-allowed">See more</button>
                     </Link>
                 </div>
                     <RecommendProduct type='shop' value={product.Vendor.id} ></RecommendProduct>
@@ -219,7 +220,7 @@ const ProductDetail = () => {
                 <div className='more-from-this-shop px-6 flex justify-between'>
                     <p className='text-3xl'>More from this category</p>
                     <Link to={`/category/${product.Category.name.split(" ")[0]}/`}>
-                    <button className="flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2">See more</button>
+                    <button className="flex items-center justify-center rounded-xl border border-black bg-white py-1 px-4 text-base font-medium text-black hover:shadow focus:ring-2 focus:ring-black-100 focus:ring-offset-2 cursor-not-allowed">See more</button>
                     </Link>
                 </div>
                     <RecommendProduct type='category' value={product.Category.name} ></RecommendProduct>

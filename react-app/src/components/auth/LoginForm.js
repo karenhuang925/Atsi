@@ -15,8 +15,9 @@ const LoginForm = ({setShowLoginModal}) => {
     const data = await dispatch(login(email, password));
     if (data) {
       setErrors(data);
+    }else{
+      setShowLoginModal(false)
     }
-    setShowLoginModal(false)
   };
 
   const updateEmail = (e) => {
@@ -32,7 +33,7 @@ const LoginForm = ({setShowLoginModal}) => {
     <div className='auth_modal'>
       <div className='flex justify-between mb-3'>
         <p className='text-2xl'>Sign in</p>
-        <RegisterModal onClose={()=>setShowLoginModal(false)}/>
+        <RegisterModal onClick={()=>setShowLoginModal(false)}/>
       </div>
       <form onSubmit={onLogin}>
         <div>
@@ -61,6 +62,7 @@ const LoginForm = ({setShowLoginModal}) => {
 
           />
           <button type='submit' className=" w-full mt-10 flex items-center justify-center rounded-3xl border border-transparent bg-gray-900 py-3 px-10 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Sign in</button>
+          
         </div>
       </form>
     </div>

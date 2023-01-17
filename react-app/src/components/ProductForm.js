@@ -37,38 +37,36 @@ const ProductForm = ({formType, product, setShowModal}) => {
         )
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
         setErrors([]);
         product = { ...product, title, category_id, price, original_price, shipping_fee, delivery_days, preview_image };
         if (formType === "Add"){
-            dispatch(add_product_fetch(product))
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                }
-            );
+            const data = await dispatch(add_product_fetch(product))
+            if (data) {
+              setErrors(data)
+            }
+            else{
+                setShowModal(false)
+            }
         }
         if (formType === "Edit"){
-            dispatch(edit_product_fetch(product, product.id)).then(()=>{
-                dispatch(get_category_products_fetch((product.Category.name.split(' ')[0])))
-                dispatch(get_user_products_fetch(sessionUser.id))
-            })
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                }
-            );
+            const data = await dispatch(edit_product_fetch(product, product.id))
+            if (data) {
+                setErrors(data)
+            }
+            else{
+                setShowModal(false)
+            }
+            dispatch(get_category_products_fetch((product.Category.name.split(' ')[0])))
+            dispatch(get_user_products_fetch(sessionUser.id))
         }
-        setShowModal(false)
     }
 
     return (
-        <div>
-        <div className="md:grid md:grid-cols-3 md:gap-6">
+        <div >
+        <div className="md:grid md:grid-cols-3 md:gap-6 max-w-screen-lg max-h-min">
             <div className="md:col-span-1">
                 <div className="px-4 sm:px-0">
                 <h3 className="text-lg font-medium leading-6 text-gray-900">{formType} Product</h3>
@@ -77,10 +75,10 @@ const ProductForm = ({formType, product, setShowModal}) => {
                 </p>
                 </div>
             </div>
-        <div className="mt-5 md:col-span-2 md:mt-0">
+        <div className="mt-5 md:col-span-2 md:mt-0 ">
         <form className='product_modal' onSubmit={handleSubmit} >
             <ul >
-                {errors.map((error, idx) => <li className='error' key={idx}>{error}</li>)}
+                {errors.map((error, idx) => <li className='error pl-4 border border-red-300' key={idx}>{error}</li>)}
             </ul>
             <div className="overflow-hidden shadow sm:rounded-md">
             <div className="bg-white px-4 py-5 sm:p-6">

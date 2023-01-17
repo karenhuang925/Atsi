@@ -5,13 +5,14 @@ import { useSelector } from 'react-redux';
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useDispatch } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 import { logout } from '../../store/session';
 import {logoutClearCart} from '../../store/cart'
 
 
 function LoginFormModal() {
     const dispatch = useDispatch()
+    const history = useHistory()
     const [showLoginModal, setShowLoginModal] = useState(false);
     const user = useSelector(state => state.session.user);
     function classNames(...classes) {
@@ -20,8 +21,10 @@ function LoginFormModal() {
     const onLogout = async (e) => {
         dispatch(logout());
         dispatch(logoutClearCart())
-        return (<Redirect to={'/'} />)
+        history.push('/')
+
     };
+
 
     if (user) {
         return (

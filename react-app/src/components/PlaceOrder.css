@@ -11,25 +11,25 @@
 .contain h1{
 	font-family: 'Julius Sans One', sans-serif;
 	font-size:1.4em;
-	color: #02b3e4;
+	color: #0260e4;
 }
 
 .congrats{
 	position:relative;
 	left:50%;
-	top:30%;
-	max-width:800px;	transform:translate(-50%,-50%);
-	width:80%;
+	top:50%;
+	max-width:700px;	transform:translate(-50%,-50%);
+	width:60%;
 	min-height:300px;
-	max-height:900px;
+	max-height:600px;
 	border:2px solid white;
 	border-radius:5px;
 	box-shadow: 12px 15px 20px 0 rgba(46,61,73,.3);
-    background-image: linear-gradient(to bottom right,#02b3e4,#02ccba);
+    background-image: linear-gradient(to bottom right,#0251e4,#02ccba);
 	background:#fff;
 	text-align:center;
 	font-size:2em;
-	color: #189086;
+	color: #33aaa0;
 }
 
 .text{

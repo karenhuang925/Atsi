@@ -1,0 +1,11 @@
+.box{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 500px;
+    padding-top: 200px;
+    background-image: url(https://img.myloview.com/posters/blue-wavy-background-simple-modern-and-flat-gradation-style-400-183535568.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}

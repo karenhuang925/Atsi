@@ -1,9 +1,19 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
 from app.models import db, Product, Category, Image
+from app.forms import ProductForm
 
 product_routes = Blueprint('products', __name__)
 
+def validation_errors_to_error_messages(validation_errors):
+    """
+    Simple function that turns the WTForms validation errors into a simple list
+    """
+    errorMessages = []
+    for field in validation_errors:
+        for error in validation_errors[field]:
+            errorMessages.append(f'{field} : {error}')
+    return errorMessages
 
 @product_routes.route('/', methods=['GET'])
 def get_all_products():
@@ -29,39 +39,31 @@ def get_product_detail(id):
 @product_routes.route('/', methods=['POST'])
 @login_required
 def create_a_product():
+    form = ProductForm()
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
+    form['csrf_token'].data = request.cookies['csrf_token']
 
-    preview_image = request.json['preview_image']
-    category_id = request.json['category_id']
-    title = request.json['title']
-    price = request.json['price']
-    original_price = request.json['original_price']
-    inventory = request.json['inventory']
-    desc = request.json['desc']
-    shipping_fee = request.json['shipping_fee']
-    delivery_days = request.json['delivery_days']
+    if form.validate_on_submit():
+        newProduct = Product(
+            user_id = user_id,
+            preview_image = form.data['preview_image'],
+            category_id = form.data['category_id'],
+            title = form.data['title'],
+            price = form.data['price'],
+            original_price = form.data['original_price'],
+            inventory = form.data['inventory'],
+            sold_num = 0,
+            desc = form.data['desc'],
+            shipping_fee = form.data['shipping_fee'],
+            delivery_days = form.data['delivery_days'],
+        )
+        db.session.add(newProduct)
+        db.session.commit()
+        
+        return newProduct.to_dict_detail()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
-
-    newProduct = Product(
-        user_id = user_id,
-        preview_image = preview_image,
-        category_id = category_id,
-        title = title,
-        price = price,
-        original_price = original_price,
-        inventory = inventory,
-        sold_num = 0,
-        desc = desc,
-        shipping_fee = shipping_fee,
-        delivery_days = delivery_days,
-    )
-
-
-    db.session.add(newProduct)
-    db.session.commit()
-
-    return newProduct.to_dict_detail()
 
 
 @product_routes.route('/<int:id>', methods=["PUT"])
@@ -70,16 +72,6 @@ def edit_product(id):
 
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
-
-    preview_image = request.json['preview_image']
-    category_id = request.json['category_id']
-    title = request.json['title']
-    price = request.json['price']
-    original_price = request.json['original_price']
-    inventory = request.json['inventory']
-    desc = request.json['desc']
-    shipping_fee = request.json['shipping_fee']
-    delivery_days = request.json['delivery_days']
 
     productEdit = Product.query.filter(id == Product.id).one_or_none()
     if not productEdit:
@@ -94,17 +86,24 @@ def edit_product(id):
             "statusCode": 403
             }, 403
 
-    productEdit.preview_image = preview_image
-    productEdit.category_id = category_id
-    productEdit.title = title
-    productEdit.price = price
-    productEdit.original_price = original_price
-    productEdit.inventory = inventory
-    productEdit.esc = desc
-    productEdit.shipping_fee = shipping_fee
-    productEdit.delivery_days = delivery_days
-    db.session.commit()
-    return productEdit.to_dict_detail()
+    form = ProductForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        productEdit.preview_image = form.data['preview_image']
+        productEdit.category_id = form.data['category_id']
+        productEdit.title = form.data['title']
+        productEdit.price = form.data['price']
+        productEdit.original_price = form.data['original_price']
+        productEdit.inventory = form.data['inventory']
+        productEdit.esc = form.data['desc']
+        productEdit.shipping_fee = form.data['shipping_fee']
+        productEdit.delivery_days = form.data['delivery_days']
+        db.session.commit()
+    
+        return productEdit.to_dict_detail()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
 
 
 @product_routes.route('/<int:id>', methods=["DELETE"])
