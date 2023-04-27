@@ -2,7 +2,7 @@
 - Flask
 - React
 - Redux
-- Node
+- Tailwind CSS
 
 ## Quick Links
 - [Database Schema](https://github.com/karenhuang925/Atsi/wiki/Schema)
