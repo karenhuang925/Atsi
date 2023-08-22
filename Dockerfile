@@ -19,8 +19,8 @@ ENV SQLALCHEMY_ECHO=True
 
 EXPOSE 8000
 
-WORKDIR /app
-COPY /app. .
+WORKDIR /app/
+COPY app/. .
 # COPY --from=build-stage /react-app/build/* app/static/
 
 # Install Python Dependencies
