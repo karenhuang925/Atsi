@@ -29,18 +29,18 @@ SECRET_KEY=«generate_strong_secret_here»
 DATABASE_URL=sqlite:///dev.db
 ```
 
-2. Run "pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt" in the app folder
-3. Run "pipenv shell" in the app folder
-4. Run "flask db upgrade" in the app folder
-5. Run "flask db seed all" in the app folder
-6. Run "flask run" in the app folder
+2. Run "pipenv install -r requirements.txt" in the main folder
+3. Run "pipenv shell" in the main folder
+4. Run "flask db upgrade" in the main folder
+5. Run "flask db seed all" in the main folder
+6. Run "flask run" in the main folder
 7. Run "npm install" in the react-app folder
 8. Run "npm start" in the react-app folder
 
 ## Future Features
 
 - [ ] Search
-- [ ] Product under certain category 
+- [ ] Product under certain category
 - [ ] AWS upload image
 - [ ] Shop page
-- [ ] Socket messaging 
+- [ ] Socket messaging
