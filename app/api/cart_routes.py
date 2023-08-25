@@ -9,6 +9,9 @@ def Merge(dict1, dict2):
 @cart_routes.route('/')
 @login_required
 def cart_info():
+    """
+    Query for all items in cart and return cart session total
+    """
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
     csession = Csession.query.filter(Csession.customer_id == user_id).one().to_dict()
@@ -30,6 +33,9 @@ def cart_info():
 @cart_routes.route('/', methods=['POST'])
 @login_required
 def new_cart_session():
+    """
+    Create new cart session if there's none for the login user
+    """
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
@@ -54,6 +60,9 @@ def new_cart_session():
 @cart_routes.route('/', methods=["PUT"])
 @login_required
 def edit_cart():
+    """
+    Update cart items
+    """
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
@@ -71,7 +80,6 @@ def edit_cart():
         filter(Citem.csession_id == currentSession['id']).\
         one_or_none()
 
-
     if theItem:
         theItem.quantity = quantity
     else:
@@ -82,7 +90,7 @@ def edit_cart():
         )
         db.session.add(newItem)
 
-# get all products in the session agin
+# get all products in the session again
     items = Citem.query.\
         filter(Citem.csession_id == currentSession['id']).\
         filter(Citem.quantity > 0).\
@@ -102,6 +110,9 @@ def edit_cart():
 @cart_routes.route('/', methods=["DELETE"])
 @login_required
 def delete_cart():
+    """
+    Delete cart if user clicked checkout
+    """
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
