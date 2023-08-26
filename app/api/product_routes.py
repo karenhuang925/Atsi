@@ -60,7 +60,7 @@ def create_a_product():
         )
         db.session.add(newProduct)
         db.session.commit()
-        
+
         return newProduct.to_dict_detail()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
@@ -69,7 +69,9 @@ def create_a_product():
 @product_routes.route('/<int:id>', methods=["PUT"])
 @login_required
 def edit_product(id):
-
+    """
+    Edit existing product by id
+    """
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
@@ -100,7 +102,7 @@ def edit_product(id):
         productEdit.shipping_fee = form.data['shipping_fee']
         productEdit.delivery_days = form.data['delivery_days']
         db.session.commit()
-    
+
         return productEdit.to_dict_detail()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
@@ -109,6 +111,9 @@ def edit_product(id):
 @product_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_product(id):
+    """
+    Delete product by id
+    """
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
